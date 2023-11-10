@@ -1,0 +1,17 @@
+CREATE TABLE note_category (
+    note_id INTEGER,
+    category_id INTEGER,
+    PRIMARY KEY (note_id, category_id),
+    FOREIGN KEY (note_id) REFERENCES note_entity(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES category_entity(id) ON DELETE CASCADE
+);
+
+
+getCategoriesForNote:
+SELECT * FROM category_entity JOIN note_category ON category_entity.id = note_category.category_id WHERE note_category.note_id = ?;
+
+getNotesCountForCategory:
+SELECT COUNT(*) FROM note_category WHERE note_category.category_id = ?;
+
+insertNoteCategory:
+INSERT OR REPLACE INTO note_category (note_id, category_id) VALUES (?, ?);

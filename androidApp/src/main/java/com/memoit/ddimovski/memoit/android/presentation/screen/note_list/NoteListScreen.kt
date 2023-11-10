@@ -88,7 +88,6 @@ fun NoteListScreen(
                     ) {
                         navController.navigate("note_detail/-1L")
                     }
-
                 }
             )
         },

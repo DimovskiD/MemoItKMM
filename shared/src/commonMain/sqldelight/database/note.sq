@@ -1,0 +1,33 @@
+CREATE TABLE note_entity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created INTEGER NOT NULL,
+    dueDate INTEGER,
+    notifications INTEGER AS Boolean DEFAULT 0 NOT NULL,
+    isCompleted INTEGER AS Boolean DEFAULT 0 NOT NULL
+);
+
+getAllNotes:
+SELECT *
+FROM note_entity;
+
+getNoteById:
+SELECT *
+FROM note_entity
+WHERE id = ?;
+
+insertNote:
+INSERT OR REPLACE
+INTO note_entity(
+    id,
+    title,
+    content,
+    created,
+    dueDate,
+    notifications,isCompleted
+) VALUES(?, ?, ?, ?, ?, ?, ?);
+
+deleteNoteById:
+DELETE FROM note_entity
+WHERE id = ?;

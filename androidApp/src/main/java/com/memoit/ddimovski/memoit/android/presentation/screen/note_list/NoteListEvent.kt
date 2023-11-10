@@ -11,6 +11,5 @@ sealed interface NoteListEvent {
     data class OnCompleteChanged(val note: Note, val isCompleted: Boolean) : NoteListEvent
     data class OnSearchTextChange(val text: String) : NoteListEvent
     object OnToggleSearch: NoteListEvent
-
 }
 

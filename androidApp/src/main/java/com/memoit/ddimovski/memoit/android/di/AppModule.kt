@@ -1,8 +1,10 @@
 package com.memoit.ddimovski.memoit.android.di
 
 import android.app.Application
-import com.memoit.ddimovski.memoit.data.local.TemporaryCategoryDataSource
-import com.memoit.ddimovski.memoit.data.local.TemporaryNoteDataSource
+import com.memoit.ddimovski.memoit.data.category.SqlDelightCategoryDataSource
+import com.memoit.ddimovski.memoit.data.local.DatabaseDriverFactory
+import com.memoit.ddimovski.memoit.data.note.SqlDelightNoteDataSource
+import com.memoit.ddimovski.memoit.database.Task
 import com.memoit.ddimovski.memoit.domain.category.CategoryDataSource
 import com.memoit.ddimovski.memoit.domain.note.NoteDataSource
 import com.squareup.sqldelight.db.SqlDriver
@@ -16,23 +18,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideSqlDriver(app: Application): SqlDriver {
-//        return DatabaseDriverFactory(app).createDriver()
-//    }
-
     @Provides
     @Singleton
-    fun provideNoteDataSource(): NoteDataSource {
-//        return SqlDelightNoteDataSource(NoteDatabase(driver)) TODO
-        return TemporaryNoteDataSource()
+    fun provideSqlDriver(app: Application): SqlDriver {
+        return DatabaseDriverFactory(app).createDriver()
     }
 
     @Provides
     @Singleton
-    fun provideCategoryDataSource(): CategoryDataSource {
-//        return SqlDelightNoteDataSource(NoteDatabase(driver)) TODO
-        return TemporaryCategoryDataSource()
+    fun provideNoteDataSource(driver: SqlDriver): NoteDataSource {
+        return SqlDelightNoteDataSource(Task(driver))
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryDataSource(driver: SqlDriver): CategoryDataSource {
+        return SqlDelightCategoryDataSource(Task(driver))
     }
 }

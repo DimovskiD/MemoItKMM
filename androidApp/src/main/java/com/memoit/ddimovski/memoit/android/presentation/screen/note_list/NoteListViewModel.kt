@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
@@ -32,6 +33,7 @@ class NoteListViewModel @Inject constructor(
 
     private val searchText = savedStateHandle.getStateFlow("searchText", "")
     private val isSearchActive = savedStateHandle.getStateFlow("isSearchActive", false)
+    private val categories = listOf(Category(1L, "DEFAULT"), Category(2L, "IMPORTANT"), Category(3L, "WORK"), Category(4L, "SCHOOL")) //todo remove
 
     private val _state = MutableStateFlow(NoteListState())
     val state = combine(
@@ -52,6 +54,12 @@ class NoteListViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), NoteListState())
 
+
+    init {
+        categories.forEach {
+            categoryDataSource.insertCategory(it)
+        }
+    }
     fun onEvent(noteListEvent: NoteListEvent) {
         when (noteListEvent) {
             is NoteListEvent.DeleteNotes -> {

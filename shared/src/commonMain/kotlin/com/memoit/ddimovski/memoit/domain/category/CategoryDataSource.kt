@@ -4,4 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CategoryDataSource {
     fun getCategories(): Flow<List<Category>>
+    fun insertCategory(category: Category)
+    fun getNotesCountForCategory(categoryId: Long): Int
 }

@@ -15,7 +15,7 @@ data class Note(
             "Sed eget odio efficitur, condimentum purus et, dapibus ipsum. Pellentesque eu nulla ante. Maecenas iaculis in orci eu commodo. Maecenas tincidunt dolor odio, non fringilla sapien congue quis. Quisque commodo lectus nisi, sed pulvinar erat egestas a. In sed purus vitae erat auctor facilisis ac a nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus congue velit sem, vel laoreet turpis placerat in. Duis ut tellus neque. In quis ligula neque. Phasellus at felis ut lacus rutrum congue non sit amet dui. Mauris ultrices, ex at convallis posuere, lectus justo rutrum dolor, id vehicula felis libero ut ipsum.\n" +
             "\n",
     val categories: List<Category> = emptyList(),
-    val dueDate: Long? = null,
+    val dueDate: LocalDateTime? = null,
     val notifications: Boolean = false,
     val isCompleted: Boolean = false,
     val created: LocalDateTime = DateTimeUtil.now()

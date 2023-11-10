@@ -9,7 +9,6 @@ interface NoteDataSource {
     suspend fun insertNote(note: Note)
     suspend fun deleteNote(id: Long)
     suspend fun updateNote(note: Note)
-    fun countNotesInCategory(category: Category) : Int
     fun getNoteById(existingNoteId: Long): Note?
 }
 

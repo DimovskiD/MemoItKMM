@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS category_entity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+insertCategory:
+INSERT OR REPLACE INTO category_entity(id, name) VALUES (?, ?);
+
+getCategoryById:
+SELECT * FROM category_entity WHERE id = ?;
+
+getAllCategories:
+SELECT * FROM category_entity;
+
+deleteCategoryById:
+DELETE FROM category_entity WHERE id = ?;
