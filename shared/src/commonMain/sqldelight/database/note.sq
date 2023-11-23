@@ -31,3 +31,7 @@ INTO note_entity(
 deleteNoteById:
 DELETE FROM note_entity
 WHERE id = ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid()
+;

@@ -50,6 +50,7 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.kotlinx.datetime)
+    implementation(libs.lottie)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

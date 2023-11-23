@@ -13,7 +13,7 @@ kotlinxDatetime = "0.4.1"
 ktorVersion = "2.3.5"
 sqlDelightVersion = "1.5.5"
 dateTimeVersion = "0.4.1"
-
+lottieVersion = "6.1.0"
 
 [libraries]
 android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelightVersion" }
@@ -38,6 +38,8 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
 native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelightVersion" }
 sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelightVersion" }
+sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqlDelightVersion" }
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref="lottieVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,6 @@
 package com.memoit.ddimovski.memoit.android.presentation.screen.note_list
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -62,22 +63,26 @@ fun NoteListScreen(
         bottomBar = {
             BottomAppBar(
                 actions = {
-                    if (state.isMultiSelectModeEnabled) {
-                        if (state.isEditEnabled) {
-                            IconButton(onClick = { /* do something */ }) {
+                    AnimatedVisibility(visible = state.isMultiSelectModeEnabled) {
+                        Row {
+                            AnimatedVisibility(state.isEditEnabled) {
+                                IconButton(onClick = {
+                                    navController.navigate("note_detail/${state.longPressedNotes.first().id}?${true}")
+                                }) {
+                                    Icon(
+                                        Icons.Outlined.Edit,
+                                        contentDescription = "Edit selected task",
+                                    )
+                                }
+                            }
+                            IconButton(onClick = {
+                                viewModel.onEvent(NoteListEvent.DeleteNotes(state.longPressedNotes))
+                            }) {
                                 Icon(
-                                    Icons.Outlined.Edit,
-                                    contentDescription = "Edit selected task",
+                                    Icons.Outlined.Delete,
+                                    contentDescription = "Delete selected",
                                 )
                             }
-                        }
-                        IconButton(onClick = {
-                            viewModel.onEvent(NoteListEvent.DeleteNotes(state.longPressedNotes))
-                        }) {
-                            Icon(
-                                Icons.Outlined.Delete,
-                                contentDescription = "Delete selected",
-                            )
                         }
                     }
                 },

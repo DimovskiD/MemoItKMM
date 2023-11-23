@@ -1,8 +1,5 @@
 package com.memoit.ddimovski.memoit.android.presentation.screen.note_list
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,14 +10,13 @@ import com.memoit.ddimovski.memoit.domain.note.Note
 import com.memoit.ddimovski.memoit.domain.note.NoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
@@ -98,7 +94,7 @@ class NoteListViewModel @Inject constructor(
             is NoteListEvent.OnCompleteChanged -> {
                 val note = noteListEvent.note.copy(isCompleted = noteListEvent.isCompleted)
                 viewModelScope.launch {
-                    noteDataSource.updateNote(note)
+                    noteDataSource.upsertNote(note)
                 }
             }
             is NoteListEvent.OnToggleSearch -> {

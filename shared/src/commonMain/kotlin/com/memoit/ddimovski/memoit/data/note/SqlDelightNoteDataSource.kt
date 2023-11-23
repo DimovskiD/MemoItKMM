@@ -5,24 +5,42 @@ import com.memoit.ddimovski.memoit.domain.category.Category
 import com.memoit.ddimovski.memoit.domain.note.Note
 import com.memoit.ddimovski.memoit.domain.note.NoteDataSource
 import com.memoit.ddimovski.memoit.domain.time.DateTimeUtil
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import database.Note_entity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapNotNull
 
 class SqlDelightNoteDataSource(db: Task) : NoteDataSource {
 
     private val noteQueries = db.noteQueries
     private val noteCategoryQueries = db.note_categoryQueries
     override fun getNotes(): Flow<List<Note>> {
-        val notes = noteQueries
-            .getAllNotes().executeAsList().map {
-                val categories = noteCategoryQueries.getCategoriesForNote(it.id).executeAsList()
+        return noteQueries
+            .getAllNotes { id,
+                           title,
+                           content,
+                           created,
+                           dueDate,
+                           notifications,
+                           isCompleted ->
+                val categories = noteCategoryQueries.getCategoriesForNote(id).executeAsList()
                     .map { category -> Category(category.id, category.name) }
-                it.toNote(categories)
-            }
-        return flowOf(notes)
+                Note_entity(
+                    id,
+                    title,
+                    content,
+                    created,
+                    dueDate,
+                    notifications,
+                    isCompleted
+                ).toNote(categories)
+            }.asFlow().mapToList()
     }
 
-    override suspend fun insertNote(note: Note) {
+    override suspend fun upsertNote(note: Note): Long {
         noteQueries.insertNote(
             id = note.id,
             title = note.title,
@@ -35,14 +53,11 @@ class SqlDelightNoteDataSource(db: Task) : NoteDataSource {
         note.categories.forEach {
             noteCategoryQueries.insertNoteCategory(note.id, it.id)
         }
+        return noteQueries.lastInsertRowId().executeAsOne()
     }
 
     override suspend fun deleteNote(id: Long) {
         noteQueries.deleteNoteById(id)
-    }
-
-    override suspend fun updateNote(note: Note) {
-        insertNote(note)
     }
 
     override fun getNoteById(existingNoteId: Long): Note? {

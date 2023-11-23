@@ -31,11 +31,18 @@ fun NoteListItem(
 ) {
     var checked by mutableStateOf(note.isCompleted)
     Card(
-        modifier = modifier.height(200.dp).fillMaxWidth(),
-        border = if (isLongPressed) BorderStroke(2.dp, MaterialTheme.colorScheme.surfaceTint) else null
+        modifier = modifier
+            .height(200.dp)
+            .fillMaxWidth(),
+        border = if (isLongPressed) BorderStroke(
+            2.dp,
+            MaterialTheme.colorScheme.surfaceTint
+        ) else null
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.Top
         ) {
@@ -47,7 +54,7 @@ fun NoteListItem(
 
             ActionIcon(
                 Icons.Default.Check,
-                "Complete task",
+                if (!checked) "Complete task" else "Reopen task",
                 onClick = {
                     checked = !checked
                     onCompleteChanged(checked)
@@ -59,10 +66,10 @@ fun NoteListItem(
         Text(
             text = note.description,
             style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.weight(1f).padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
             overflow = TextOverflow.Ellipsis
         )
-
-
     }
 }

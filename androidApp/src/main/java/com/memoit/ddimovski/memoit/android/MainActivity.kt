@@ -26,11 +26,15 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(
-                        route = "note_detail/{noteId}",
+                        route = "note_detail/{noteId}?{isInEditMode}",
                         arguments = listOf(
                             navArgument(name = "noteId") {
                                 type = NavType.LongType
                                 defaultValue = -1L
+                            },
+                            navArgument(name = "isInEditMode") {
+                                type = NavType.BoolType
+                                defaultValue = false
                             }
                         )
                     ) { backStackEntry ->

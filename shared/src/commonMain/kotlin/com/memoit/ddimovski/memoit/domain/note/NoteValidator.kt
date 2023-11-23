@@ -22,6 +22,8 @@ object NoteValidator {
         val titleError: String? = null,
         val descriptionError: String? = null,
         val dateError: String? = null,
-    )
+    ) {
+        fun isValid() = listOfNotNull(titleError, descriptionError, dateError).isEmpty()
+    }
 }
 
